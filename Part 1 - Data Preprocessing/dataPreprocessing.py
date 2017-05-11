@@ -37,3 +37,19 @@ onehotencoder = OneHotEncoder(categorical_features = [0])
 X = onehotencoder.fit_transform(X).toarray()
 labelencoder_Y = LabelEncoder()
 Y = labelencoder_Y.fit_transform(Y)
+# Splitting dataset into training set and test set
+# performance on the test set should not be very different from that in the training set
+from sklearn.cross_validation import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2, random_state = 1)
+# next step:
+    #Feature Scaling : feature scaling is very important because most of the machine learning model is based upon the Euclidean distance
+    # feature scaling is performed via: Standardization and normalization
+# standardization: (x-mean(x))/(standard deviation)
+# normalization = ((x-min)/(max-min))
+from sklearn.preprocessing import StandardScaler
+sc_X = StandardScaler()
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.fit_transform(X_test)
+# do we need to fit and transform dummy variables? it depends on the context, but it wont break your model
+# even if the algorithms are not based on the euclidean distance the model will converge a lot faster if the features are scaled
+# in classification we do not scale the dependent variable but in regression we will have to scale it.
